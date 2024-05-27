@@ -1,0 +1,168 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Servicios {% endblock title %}
+
+{% block breadcrumb %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Listado de solicitudes de la institucion {{institution.name}}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('institutions.index', page=1) }}">Instituciones</a>
+                    </li>
+                    <li class="breadcrumb-item active">Solicitudes</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock breadcrumb %}
+
+{% block content %}
+{{ super() }}
+<div class="container-fluid">
+    {% include 'service_requests/filter.html' %}
+
+    {% if reques.total == 0 %}
+    <div class="alert alert-info" role="alert">
+        No se encontraron resultados
+    </div>
+    {% else %}
+    <!-- Default box -->
+    <div class="card card-solid">
+        <div class="card-body pb-0">
+            <div class="row">
+                {% for reque in reques %}
+                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                    <div class="card bg-light d-flex flex-fill">
+                        <div class="card-header text-muted border-bottom-0">
+                            {% if reque.last_state.name %}
+                            Estado: {{ reque.last_state.name }}
+                            {% else %}
+                            Estado: Sin estado
+                            {% endif %}
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2 class="lead"><b>{{ reque.title }}</b></h2>
+                                    <p class="text-muted text-sm"><b>Tipo de servicio: </b>
+                                        {{ reque.service.type_of_service.value }}
+                                    </p>
+                                    <p class="text-muted small"><b>Fecha de creación: </b><br>
+                                        {{ reque.creation_date.strftime('%d/%m/%Y') }}
+                                        {{ reque.creation_date.strftime('%H:%M') }}
+                                    </p>
+                                    <p class="text-muted small"><b>Fecha de cierre: </b><br>
+                                        {% if reque.close_date %}
+                                        {{ reque.close_date.strftime('%d/%m/%Y') }}
+                                        {{ reque.creation_date.strftime('%H:%M') }}
+                                        {% else %}
+                                        Sin fecha de cierre
+                                        {% endif %}
+                                    </p>
+                                    <hr>
+                                    <p class="text-muted"><b>Datos del usuario</b></p>
+                                    <p class="text-muted small"><b>Nombre completo: </b><br>
+                                        {{ reque.user.first_name }} {{ reque.user.last_name }}
+                                    </p>
+                                    <p class="text-muted small"><b>Email del usuario: </b><br>
+                                        {{ reque.user.email }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <a href="{{ url_for('service_requests.show', id_inst = inst, id_reque=reque.id ) }}"
+                                    class="btn btn-secondary btn-sm"><i class="fas fa-angle-double-right"></i>
+                                    Detalle</a>
+
+                                <button class="btn btn-warning btn-sm dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Acciones
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a href="{{ url_for('service_requests.edit', id_inst = inst, id_reque=reque.id ) }}"
+                                        class="dropdown-item"><i class="fas fa-edit"></i>
+                                        Cambiar estado</a>
+                                    <a href="{{ url_for('service_requests.show_notes', id_inst = inst, id_reque=reque.id ) }}"
+                                        class="dropdown-item"><i class="fas fa-sticky-note"></i>
+                                        Agregar nota</a>
+                                </div>
+
+                                <form
+                                    action="{{ url_for('service_requests.delete', id_inst = inst, id_reque=reque.id ) }}"
+                                    method="POST" style="display: inline-block"
+                                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta solicitud?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i>
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <ul class="pagination pagination-sm m-0 float-right">
+                {% if reques.has_prev %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{{ url_for('service_requests.index', id_inst=inst, page=reques.prev_num) }}">&laquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">&laquo;</a>
+                </li>
+                {% endif %}
+
+                {% for page_num in reques.iter_pages() %}
+                {% if page_num %}
+                {% if reques.page == page_num %}
+                <li class="page-item active">
+                    <span class="page-link">{{ page_num }}</span>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('service_requests.index', id_inst=inst, page=page_num) }}">{{
+                        page_num }}</a>
+                </li>
+                {% endif %}
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">{{ page_num }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+
+                {% if reques.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="{{ url_for('service_requests.index', id_inst=inst, page=reques.next_num) }}">&raquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- /.card-footer -->
+    </div>
+    <!-- /.card -->
+    {% endif %}
+</div>
+{% endblock content %}

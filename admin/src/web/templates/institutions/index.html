@@ -1,0 +1,86 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Instituciones {% endblock title %}
+{% block breadcrumb %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Listado de instituciones</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Instituciones</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock breadcrumb %}
+
+{% block content %}
+{{ super() }}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <a href="{{ url_for('institutions.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Crear institución
+                    </a>
+                    <a href="{{ url_for('institutions.my_institutions', page=1) }}" class="btn btn-primary">
+                        <i class="fas fa-list"></i> Mis Instituciones
+                    </a>
+                    {% if can_view('user_assign_rol') %}
+                    <a href="{{ url_for('institutions.create_assignment') }}" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i> Crear Asignación</a>
+                    {% endif %}
+                </div>
+                {% if institutions.total == 0 %}
+                <div class="card-body">
+                    <p class="text-center">No hay instituciones registradas</p>
+                </div>
+                {% else %}
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-bordered table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Dirección</th>
+                                <th>Contacto</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for inst in institutions.items %}
+                            <tr>
+                                <td>{{ inst.name }}</td>
+                                <td>{{ inst.direccion }}</td>
+                                <td>{{ inst.contacto }}</td>
+                                <td>
+                                    {% if inst.habilitado %}
+                                    <span class="badge bg-success">Habilitado</span>
+                                    {% else %}
+                                    <span class="badge bg-danger">Deshabilitado</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% include 'institutions/actions.html'%}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% include 'institutions/pagination.html'%}
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

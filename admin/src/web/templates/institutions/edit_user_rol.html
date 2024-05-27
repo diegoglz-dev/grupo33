@@ -1,0 +1,29 @@
+{% extends 'layouts/app.html' %}
+{% block title %}Asignar Usuario a Institución{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block content %}
+    <h1>Asignar Usuario a Institución</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+
+<form method="post">
+    <label for="new_role">Nuevo Rol:</label>
+    <select name="new_role" id="new_role">
+        {% for rol in roles %}
+            <option value="{{ rol.id }}">{{ rol.nombre }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <input type="submit" value="Guardar Cambios">
+</form>
+
+{% endblock content %}

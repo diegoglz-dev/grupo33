@@ -1,0 +1,49 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Servicios {% endblock title %}
+{% block breadcrumb %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Editar Servicio</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('services.index', id_inst=inst, page=1) }}">Servicios</a>
+                    </li>
+                    <li class="breadcrumb-item active">Editar</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock breadcrumb %} {% block content %}
+{{ super() }}
+<div class="card card-warning">
+    <div class="card-header">
+
+    </div>
+    <form action="{{ url_for('services.update', id_inst=inst, id_serv= serv.id ) }}" method="POST">
+        <!-- <input type="hidden" name="_method" value="PUT" /> -->
+        <div class="card-body">
+            <div class="row">
+                {% include 'services/fields.html' %}
+            </div>
+        </div>
+
+        {# /.card-body #}
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-warning">Editar</button>
+            <a href="{{ url_for('services.index', id_inst=inst, page=1 ) }}" type="button"
+                class="btn btn-secondary float-right">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,108 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Detalle {% endblock title %}
+{% block breadcrumb %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Detalle de la solicitud</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('service_requests.index', id_inst=id_inst, page=1) }}">Solicitudes</a>
+                    </li>
+                    <li class="breadcrumb-item active">Detalle</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock breadcrumb %}
+{% block content %}
+{{ super() }}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Detalle de la solicitud</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                {% if not reque.events %}
+                <div class="alert alert-info alert-dismissible">
+                    <h5><i class="icon fas fa-exclamation-triangle"></i> Mensaje</h5>
+                    No hay eventos registrados para esta solicitud.
+                </div>
+                {% else %}
+                <!-- Timeline -->
+                <div class="container-fluid">
+
+                    <!-- Timelime example  -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- The time line -->
+                            <div class="timeline">
+                                <!-- timeline time label -->
+                                {% for event in reque.events %}
+                                <div class="time-label">
+                                    <span class="bg-red">
+                                        {{ event.state_request.created_at.strftime('%d/%m/%Y') }}
+                                    </span>
+                                </div>
+                                <!-- /.timeline-label -->
+                                <!-- timeline item -->
+                                <div>
+                                    <i class="far fa-calendar-check bg-blue"></i>
+                                    <div class="timeline-item">
+                                        <span class="time">
+                                            <i class="fas fa-clock"></i>
+                                            {{ event.state_request.created_at.strftime('%H:%M') }}
+                                        </span>
+                                        <h3 class="timeline-header"><span class="text-primary">Estado:</span>
+                                            {{ event.state_request.name }}
+                                        </h3>
+
+                                        <div class="timeline-body">
+                                            {{ event.observation }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <!-- END timeline item -->
+                                <div>
+                                    <i class="fas fa-clock bg-gray"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+                <!-- /.timeline -->
+                {% endif %}
+            </div>
+            <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                <h3 class="text-primary"><i class="fas fa-receipt"></i> {{ reque.title }}</h3>
+                <p class="text-muted">{{ reque.description }}</p>
+                <br>
+                <h5 class="mt-5 text-muted">Información del solicitante</h5>
+                <div class="text-muted">
+                    <p class="text-sm">Nombre completo
+                        <b class="d-block">{{ reque.user.first_name }} {{ reque.user.last_name }}</b>
+                    </p>
+                    <p class="text-sm">Email
+                        <b class="d-block">{{ reque.user.email }}</b>
+                    </p>
+                </div>
+
+                <div class="mt-5 mb-3">
+                    <a href="{{ url_for('service_requests.index', id_inst=id_inst, page=1 ) }}"
+                        class="btn btn-sm btn-secondary">Volver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

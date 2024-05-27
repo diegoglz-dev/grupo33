@@ -1,0 +1,36 @@
+<li class="nav-item">
+    <a href="{{ url_for('dash.dashboard') }}"
+        class="nav-link {% if request.url == url_host + url_for('dash.dashboard') %} active {% endif %}">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>Dashboard</p>
+    </a>
+</li>
+{% if can_view('institution_index') %}
+<li class="nav-item">
+    <a href="{{ url_for('institutions.index', page=1) }}"
+        class="nav-link {% if request.url == url_host + url_for('institutions.index', page=1) %} active {% endif %}">
+        <i class="nav-icon fas fa-building"></i>
+        <p>Instituciones</p>
+    </a>
+</li>
+{% endif %}
+
+{% if can_view('user_index') %}
+<li class="nav-item">
+    <a href="{{ url_for('users.index', page=1) }}"
+        class="nav-link {% if request.url == url_host + url_for('users.index', page=1) %} active {% endif %}">
+        <i class="nav-icon fas fa-user-alt"></i>
+        <p>Usuarios</p>
+    </a>
+</li>
+{% endif %}
+
+{% if can_view('configuration_show') %}
+<li class="nav-item">
+    <a href="{{ url_for('configuration.show') }}"
+        class="nav-link {% if request.url == url_host + url_for('configuration.show') %} active {% endif %}">
+        <i class="nav-icon fas fa-tools"></i>
+        <p>Configuraciones</p>
+    </a>
+</li>
+{% endif %}

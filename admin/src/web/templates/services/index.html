@@ -1,0 +1,136 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Servicios {% endblock title %}
+
+{% block breadcrumb %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Listado de Servicios</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('institutions.index', page=1) }}">Instituciones</a>
+                    </li>
+                    <li class="breadcrumb-item active">Servicios</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock breadcrumb %}
+
+{% block content %}
+{{ super() }}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <a href="{{ url_for('services.create', id_inst=inst) }}" class="btn btn-primary">Crear servicio</a>
+                </div>
+                {% if servs.total == 0 %}
+                <div class="card-body">
+                    <p class="text-center">No hay servicios registrados</p>
+                </div>
+                {% else %}
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-bordered table-hover text-nowrap">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Habilitado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for serv in servs %}
+                            <tr>
+                                <td>{{ serv.name }}</td>
+                                <td>{{ serv.type_of_service.value }}</td>
+                                <td>
+                                    {% if serv.enabled %}
+                                    <span class="badge badge-success">Sí</span>
+                                    {% else %}
+                                    <span class="badge badge-danger">No</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('services.show', id_inst= inst, id_serv = serv.id ) }}"
+                                        class="btn btn-secondary btn-sm"><i class="fas fa-angle-double-right"></i>
+                                        Detalle</a>
+                                    <a href="{{ url_for('services.edit', id_inst= inst, id_serv = serv.id ) }}"
+                                        class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i>
+                                        Editar</a>
+                                    <form action="{{ url_for('services.delete', id_inst= inst, id_serv = serv.id ) }}"
+                                        method="POST" style="display: inline-block"
+                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar {{ serv.name }}?')">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer clearfix">
+                    <ul class="pagination pagination-sm m-0 float-right">
+                        {% if servs.has_prev %}
+                        <li class="page-item">
+                            <a class="page-link"
+                                href="{{ url_for('services.index', id_inst=inst, page=servs.prev_num) }}">&laquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">&laquo;</a>
+                        </li>
+                        {% endif %}
+
+                        {% for page_num in servs.iter_pages() %}
+                        {% if page_num %}
+                        {% if servs.page == page_num %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ page_num }}</span>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('services.index', id_inst=inst, page=page_num) }}">{{
+                                page_num }}</a>
+                        </li>
+                        {% endif %}
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">{{ page_num }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+
+
+                        {% if servs.has_next %}
+                        <li class="page-item">
+                            <a class="page-link"
+                                href="{{ url_for('services.index', id_inst=inst, page=servs.next_num) }}">&raquo;</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#">&raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    {% endblock content %}

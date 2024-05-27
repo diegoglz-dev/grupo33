@@ -1,0 +1,58 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Solicitudes {% endblock title %}
+{% block breadcrumb %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Editar estado</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('service_requests.index', id_inst=id_inst, page=1) }}">Solicitudes</a>
+                    </li>
+                    <li class="breadcrumb-item active">Editar</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock breadcrumb %}
+{% block content %}
+{{ super() }}
+<div class="col-sm-6">
+    <div class="card card-warning">
+        <div class="card-header">
+
+        </div>
+        <form action="{{ url_for('service_requests.update', id_inst=id_inst, id_reque=id_reque, page=1 ) }}"
+            method="POST">
+            <div class="card-body">
+                <div class="form-group col-sm-12">
+                    <label for="state_request_id">Estado</label>
+                    {{ form.state_request_id(class="form-control", id="state_request_id",
+                    placeholder="Estado") }}
+                </div>
+
+                <div class="form-group col-sm-12">
+                    <label for="observation">Observaciones</label>
+                    {{ form.observation(class="form-control", id="observation",
+                    placeholder="Observaciones", rows=8) }}
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-warning">Editar</button>
+                <a href="{{ url_for('service_requests.index', id_inst=id_inst, page=1 ) }}" type="button"
+                    class="btn btn-secondary float-right">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

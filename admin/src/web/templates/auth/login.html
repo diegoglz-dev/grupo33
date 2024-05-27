@@ -1,0 +1,87 @@
+{% extends 'layouts/auth.html' %}
+{% block title %} Login {% endblock title %}
+{% block content %}
+{{ super() }}
+
+<div class="card">
+    <div class="card-body login-card-body">
+        <p class="login-box-msg">Inicia sesión para comenzar</p>
+
+        <form action="{{ url_for('auth.authenticate') }}" id="loginForm" method="POST">
+            <div class="input-group mb-3">
+                {{ form.email(class="form-control", id="email",
+                placeholder="Ingrese usuario o correo", autofocus=autofocus) }}
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group mb-3">
+                {{ form.password(class="form-control", id="password",
+                placeholder="Ingrese contraseña") }}
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" id="loginButton" class="btn btn-primary btn-block toastsDefaultDefault"
+                        disabled>
+                        Ingresar
+                    </button>
+                    <a href="{{ url_for('auth.login_google') }}" class="btn btn-block btn-outline-danger">
+                        <i class="fab fa-google mr-2"></i> Ingresar con Google
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        <div class="mt-3 mb-1">
+            <a href="{{ url_for('auth.register') }}">¿No posee una cuenta? Registrese aquí</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block custom_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const formLogin = document.getElementById("loginForm");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const buttonLogin = document.getElementById("loginButton");
+
+        // Agregar un evento de entrada a cada campo del formulario
+        [email, password].forEach(function (field) {
+            field.addEventListener("input", function () {
+                // Verificar si todos los campos están completos
+                const allComplete = [email, password].every(function (field) {
+                    return field.value.trim() !== "";
+                });
+
+                // Habilitar o deshabilitar el botón según si todos los campos están completos
+                loginButton.disabled = !allComplete;
+            });
+        });
+
+        formLogin.addEventListener("submit", function (event) {
+            buttonLogin.disabled = true;
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $('.toastsDefaultDefault').click(function () {
+            $(document).Toasts('create', {
+                title: 'Procesando solicitud...',
+                body: 'Estamos procesando su solicitud. Por favor espere...',
+            })
+        });
+    })
+</script>
+{% endblock custom_js %}

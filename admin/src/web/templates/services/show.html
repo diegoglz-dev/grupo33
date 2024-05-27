@@ -1,0 +1,66 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Detalle {% endblock title %}
+{% block breadcrumb %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Detalle del Servicio</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('services.index', id_inst=inst, page=1) }}">Servicios</a>
+                    </li>
+                    <li class="breadcrumb-item active">Detalle</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock breadcrumb %} {% block content %}
+{{ super() }}
+<div class="card card-secondary">
+    <div class="card-header">
+
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <p><strong>Nombre:</strong> {{ serv.name }}</p>
+            </div>
+            <div class="col-sm-6">
+                <p><strong>Tipo de servicio:</strong> {{ serv.type_of_service.value }}</p>
+            </div>
+            <div class="col-sm-6">
+                <p><strong>Palabras clave:</strong> {{ serv.keywords }}</p>
+            </div>
+            <div class="col-sm-6">
+                <p><strong>Descripción:</strong> {{ serv.description }}</p>
+            </div>
+            <div class="col-sm-6">
+                <p><strong>Habilitado:</strong>
+                    {% if serv.enabled %}
+                    <span class="badge badge-success">Sí</span>
+                    {% else %}
+                    <span class="badge badge-danger">No</span>
+                    {% endif %}
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <a href="{{ url_for('services.index', id_inst=inst, page=1 ) }}" type="button"
+            class="btn btn-secondary float-right">
+            Volver
+        </a>
+    </div>
+
+</div>
+{% endblock content %}

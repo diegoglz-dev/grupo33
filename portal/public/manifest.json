@@ -1,0 +1,23 @@
+{
+  "name": "Cidepint",
+  "short_name": "Cidepint",
+  "description": "Centro de Investigación y Desarrollo en Pinturas (CIDEPINT) es un laboratorio de investigación y desarrollo de pinturas y recubrimientos, que brinda servicios de análisis y ensayos a la industria y a la comunidad científica.",
+  "start_url": "https://grupo33.proyecto2023.linti.unlp.edu.ar/",
+  "scope": "https://grupo33.proyecto2023.linti.unlp.edu.ar/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "https://grupo33.proyecto2023.linti.unlp.edu.ar/img/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://grupo33.proyecto2023.linti.unlp.edu.ar/img/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

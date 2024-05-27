@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activación de cuenta</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: "Roboto", sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        .activation-button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .activation-button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Bienvenido!</h1>
+        <p>Gracias por registrarte en CIDEPINT. Para activar tu cuenta, por favor, haz clic en el siguiente botón:</p>
+        <a class="activation-button" href="{{ activation_link }}">Activar cuenta</a>
+    </div>
+</body>
+</html>

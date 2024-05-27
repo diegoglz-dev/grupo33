@@ -1,0 +1,33 @@
+<div class="form-group col-sm-6">
+    <label for="name">Nombre</label>
+    {{ form.name(class="form-control", id="name",
+    placeholder="Nombre del servicio", autofocus=autofocus) }}
+</div>
+
+<div class="form-group col-sm-6">
+    <label for="keywords">Palabras clave</label>
+    {{ form.keywords(class="form-control", id="keywords",
+    placeholder="Palabras clave") }}
+</div>
+
+<div class="form-group col-sm-6">
+    <label for="type_of_service">Tipo de servicio</label>
+    {{ form.type_of_service(class="form-control", id="type_of_service",
+    placeholder="Palabras clave") }}
+</div>
+
+<div class="form-group col-sm-6">
+    <label for="description">Descripción</label>
+    {{ form.description(class="form-control", id="description",
+    placeholder="Descripción") }}
+</div>
+
+<div class="col-sm-6">
+    <div class="form-group">
+        <div class="custom-control custom-switch">
+            {{ form.enabled(class="custom-control-input",
+            id="activeSwitch") }}
+            <label class="custom-control-label" for="activeSwitch">Habilitado</label>
+        </div>
+    </div>
+</div>

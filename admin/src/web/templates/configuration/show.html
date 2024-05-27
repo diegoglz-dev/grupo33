@@ -1,0 +1,69 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Configuraciones {% endblock title %}
+{% block breadcrumb %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Configuraciones</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Configuraciones</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock breadcrumb %}
+
+{% block content %}
+{{ super() }}
+<div class="card card-warning">
+    <div class="card-header">
+
+    </div>
+    <form action="{{ url_for('configuration.update') }}" method="POST">
+        <!-- <input type="hidden" name="_method" value="PUT" /> -->
+        <div class="card-body">
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label for="per_page">Elementos por página</label>
+                    {{ form.per_page(class="form-control",
+                    id="per_page", placeholder="Ingrese cantidad de elementos por página",
+                    autofocus=autofocus) }}
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="contact">Contacto</label>
+                    {{ form.contact(class="form-control", id="contact",
+                    placeholder="Ingrese info. de contacto") }}
+                </div>
+                <div class="form-group col-sm-12">
+                    <label for="maintenance_message">Mensaje de mantenimiento</label>
+                    {{ form.maintenance_message(class="form-control", id="maintenance_message",
+                    placeholder="Ingrese mensaje de mantenimiento") }}
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            {{ form.enabled_site(class="custom-control-input",
+                            id="activeSwitch") }}
+                            <label class="custom-control-label" for="activeSwitch">Sitio habilitado</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-warning">Actualizar</button>
+            <a href="{{ url_for('dash.dashboard') }}" type="button" class="btn btn-secondary float-right">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

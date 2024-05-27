@@ -1,0 +1,29 @@
+{% extends 'layouts/app.html' %} {% block title %} Dashboard {% endblock title
+%} {% block breadcrumb %} {# Content Header (Page header) #}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    {# /.container-fluid #}
+</section>
+{% endblock breadcrumb %}
+{% block content %}
+{{ super() }}
+<div class="jumbotron mt-3">
+    <h1 class="display-4">Bienvenido a CIDEPINT!</h1>
+    <p class="lead">¡{{ session['name'] }}!</p>
+    <hr class="my-4" />
+    <p>El Centro de Investigación y Desarrollo en Pinturas (CIDEPINT) es un laboratorio de investigación y desarrollo de
+        pinturas y recubrimientos, que brinda servicios de análisis y ensayos a la industria y a la comunidad
+        científica.</p>
+</div>
+{% endblock content %}

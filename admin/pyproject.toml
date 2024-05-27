@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "web"
+version = "0.1.0"
+description = "Proyecto de Software - Grupo 33"
+authors = ["Diego Gonzalez <gonzalezdiego1990@gmail.com>","Juan Sebastian Beltran <beltry1@hotmail.com>, Jeremías Martín Alvarez <jmtnalv@gmail.com>", "Mariangeles Muñoz Loza <marialanus97@gmail.com>"]
+readme = "README.md"
+packages = [{include = "web", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "3.8.10"
+flask = "^2.3.3"
+psycopg2-binary = "^2.9.7"
+flask-sqlalchemy = "^3.1.1"
+python-dotenv = "^1.0.0"
+flask-session = "^0.5.0"
+flask-bcrypt = "^1.0.1"
+wtforms = "^3.0.1"
+email-validator = "^2.0.0.post2"
+wtforms-alchemy = "^0.18.0"
+marshmallow = "^3.20.1"
+flask-mail = "^0.9.1"
+pyjwt = "^2.8.0"
+flask-jwt-extended = "^4.5.3"
+flask-cors = "^4.0.0"
+authlib = "^1.2.1"
+requests = "^2.31.0"
+pyopenssl = "^23.3.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.1"
+flask-shell-ipython = "^0.5.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

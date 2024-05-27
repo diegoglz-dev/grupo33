@@ -1,0 +1,60 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Asignar Usuario a Institución {% endblock title %}
+{% block breadcrumb %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Crear usuario</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('users.index', page=1) }}">Usuarios</a>
+                    </li>
+                    <li class="breadcrumb-item active">Crear</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock breadcrumb %}
+{% block content %}
+<h1>Asignar Usuario a Institución 2</h1>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class="flashes">
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<form method="post" action="{{ url_for('users.asignar_usuario_rol', id=institucion.id)  }}">
+    <label for="user_email">Email del Usuario:</label>
+    <input type="text" name="user_email" id="user_email" placeholder="Ingrese el correo electrónico del usuario">
+
+    <br>
+
+    <label for="rol">Rol:</label>
+    <select name="rol" id="rol">
+        {% for rol in roles %}
+        <option value="{{ rol.id }}">{{ rol.nombre }}</option>
+        {% endfor %}
+    </select>
+    <br>
+
+    <label for="inst">Institución:</label>
+    <select name="inst" id="inst">
+        <option value="{{ institucion.id }}">{{ institucion.name }}</option>
+    </select>
+    <br>
+
+    <input type="submit" value="Asignar Rol">
+</form>
+{% endblock content %}

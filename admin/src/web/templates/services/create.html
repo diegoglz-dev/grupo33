@@ -1,0 +1,47 @@
+{% extends 'layouts/app.html' %} {% block title %} Servicios {% endblock title %}
+{% block breadcrumb %} {# Content Header (Page header) #}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Crear Servicio</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('services.index', id_inst=inst, page=1) }}">Servicios</a>
+                    </li>
+                    <li class="breadcrumb-item active">Crear</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    {# /.container-fluid #}
+</section>
+{% endblock breadcrumb %}
+{% block content %}
+{{ super() }}
+<div class="card card-primary">
+    <div class="card-header">
+
+    </div>
+    <form action="{{ url_for('services.store', id_inst=inst) }}" method="POST">
+        <div class="card-body">
+            <div class="row">
+                {% include 'services/fields.html' %}
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{ url_for('services.index', id_inst=inst, page=1) }}" type="button"
+                class="btn btn-secondary float-right">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

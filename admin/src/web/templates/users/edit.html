@@ -1,0 +1,58 @@
+{% extends 'layouts/app.html' %} {% block title %} Usuarios {% endblock title %}
+{% block breadcrumb %} {# Content Header (Page header) #}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Editar usuario</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('dash.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('users.index', page=1) }}">Usuarios</a>
+                    </li>
+                    <li class="breadcrumb-item active">Editar</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    {# /.container-fluid #}
+</section>
+{% endblock breadcrumb %} {% block content %} {{ super() }} {# general form
+elements #}
+<div class="card card-warning">
+    <div class="card-header">
+        {#
+        <h3 class="card-title">Quick Example</h3>
+        #}
+    </div>
+    {# /.card-header #} {# form start #}
+    <form action="{{ url_for('users.update', id = user.id ) }}" method="POST">
+        <!-- <input type="hidden" name="_method" value="PUT" /> -->
+        <div class="card-body">
+            <div class="row">
+                {% include 'users/fields.html' %}
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            {{ form.active(class="custom-control-input",
+                            id="activeSwitch") }}
+                            <label class="custom-control-label" for="activeSwitch">Activo</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-warning">Editar</button>
+            <a href="{{ url_for('users.index', page=1) }}" type="button" class="btn btn-secondary float-right">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{# /.card #} {% endblock content %}

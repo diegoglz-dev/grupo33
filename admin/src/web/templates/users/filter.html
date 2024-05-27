@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card card-primary collapsed-card">
+            <div class="card-header">
+                <h3 class="card-title">Buscar</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <form action="{{ url_for('users.search_result') }}" method="GET">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="email" id="email" class="form-control"
+                                        placeholder="Ingrese email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-group row">
+                                <label for="active" class="col-sm-2 col-form-label">Activo</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="active" id="active">
+                                        <option value="">Todos</option>
+                                        <option value="1">Sí</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i>
+                                Filtrar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
